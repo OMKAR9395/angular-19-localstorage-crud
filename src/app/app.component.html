@@ -76,12 +76,10 @@
             <mat-label>State</mat-label>
             <mat-select [(ngModel)]="userObj.state" name="state" required>
               <mat-option [value]="">Choose State</mat-option>
-              <mat-option>Maharashtra</mat-option>
-              <mat-option>Goa</mat-option>
-              <mat-option>Tamilnadu</mat-option>
-              <mat-option>Punjab</mat-option>
+              <mat-option *ngFor="let s of states" [value]="s">{{ s }}</mat-option>
             </mat-select>
           </mat-form-field>
+
 
           <mat-form-field appearance="fill">
             <mat-label>Zip</mat-label>

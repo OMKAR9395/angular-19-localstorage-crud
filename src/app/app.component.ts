@@ -27,6 +27,8 @@ export class AppComponent implements OnInit {
   isNewUser: boolean = true;
   userObj: User = new User();
   userList: User[] = [];
+  states: string[] = ['Maharashtra', 'Goa', 'Tamil Nadu', 'Punjab'];
+
 
   snack = inject(MatSnackBar);
 
