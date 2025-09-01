@@ -1,33 +1,113 @@
-<div class="row">
-  <div class="col-12">
-    <div class="card">
-      <div class="card-header bg-warning">
-        <div class="row">
-          <div class="col-6">
-            <h6>User List</h6>
-          </div>
-          <button class="col-6 text-end">Add New User</button>
-        </div>
-      </div>
-    </div>
-    <div class="card-body">
+<!-- Top bar -->
+<mat-toolbar class="header-toolbar elev-2">
+  <span class="app-title">Crud Appication Using Local Storage</span>
+  <span class="spacer"></span>
+  @if (isNewUser) {
+  <button mat-raised-button color="accent" (click)="changeView()">Add New User</button>
+  } @else {
+  <button mat-raised-button color="accent" (click)="changeView()">List View</button>
+  }
+</mat-toolbar>
 
-    </div>
-  </div>
 
-  <div class="col-12">
-    <div class="card">
-      <div class="card-header bg-warning">
-        <div class="row">
-          <div class="col-6">
-            <h6>User List</h6>
+
+<div class="page">
+  @if (isNewUser) {
+  <!-- LIST VIEW -->
+  <mat-card class="panel">
+    <mat-card-header>
+      <mat-card-title>
+        <h2 class="panel-title">User List</h2>
+      </mat-card-title>
+      <mat-card-subtitle>
+        <h3 class="panel-subtitle">All saved users</h3>
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="cards">
+        @for (item of userList; track $index) {
+        <mat-card class="user-card elev-1">
+          <mat-card-title>{{ item.fName }} {{ item.lName }}</mat-card-title>
+          <mat-card-subtitle>&#64; {{ item.uName }}</mat-card-subtitle>
+          <p class="muted">{{ item.city }}, {{ item.state }}, {{ item.zipcode }}</p>
+
+          <div class="actions">
+            <button mat-stroked-button color="primary" (click)="onEdit(item)">Edit</button>
+            <button mat-stroked-button color="warn" (click)="onDelete(item.userId)">Delete</button>
           </div>
-          <button class="col-6 text-end">Add New User</button>
-        </div>
+        </mat-card>
+        }
       </div>
-    </div>
-    <div class="card-body">
-      
-    </div>
-  </div>
+    </mat-card-content>
+  </mat-card>
+  } @else {
+  <!-- FORM VIEW -->
+  <mat-card class="panel">
+    <mat-card-header>
+      <mat-card-title>
+        <h2 class="panel-title">New User</h2>
+      </mat-card-title>
+      <mat-card-subtitle>
+        <h3 class="panel-subtitle">Fill the details and submit</h3>
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form class="form" (ngSubmit)="userObj.userId === 0 ? onSave() : onUpdate()" novalidate>
+        <div class="grid">
+          <mat-form-field appearance="fill">
+            <mat-label>First name</mat-label>
+            <input matInput [(ngModel)]="userObj.fName" name="fName" minlength="2" maxlength="20" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Last name</mat-label>
+            <input matInput [(ngModel)]="userObj.lName" name="lName" minlength="2" maxlength="20" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Username</mat-label>
+            <span matPrefix>&#64;&nbsp;</span>
+            <input matInput [(ngModel)]="userObj.uName" name="uName" minlength="4" maxlength="15" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="span-2">
+            <mat-label>City</mat-label>
+            <input matInput [(ngModel)]="userObj.city" name="city" minlength="3" maxlength="30" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>State</mat-label>
+            <mat-select [(ngModel)]="userObj.state" name="state" required>
+              <mat-option [value]="">Choose State</mat-option>
+              <mat-option>Maharashtra</mat-option>
+              <mat-option>Goa</mat-option>
+              <mat-option>Tamilnadu</mat-option>
+              <mat-option>Punjab</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Zip</mat-label>
+            <input matInput [(ngModel)]="userObj.zipcode" name="zipcode" minlength="6" maxlength="6" required>
+          </mat-form-field>
+        </div>
+
+        <mat-checkbox [(ngModel)]="userObj.isAgree" name="isAgree" required>
+          Agree to terms and conditions
+        </mat-checkbox>
+
+        <div class="submit-row">
+          <button mat-raised-button color="primary" type="submit" *ngIf="userObj.userId === 0">
+            Submit User
+          </button>
+          <button mat-raised-button color="warn" type="submit" *ngIf="userObj.userId !== 0">
+            Update User
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  }
 </div>
