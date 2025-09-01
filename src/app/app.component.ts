@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgIf } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 
 // Angular Material
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -15,7 +15,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-root',
   imports: [
-    FormsModule, NgIf,
+    FormsModule, NgIf,NgFor,
     MatToolbarModule, MatButtonModule, MatCardModule,
     MatFormFieldModule, MatInputModule, MatSelectModule, MatCheckboxModule
   ],
